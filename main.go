@@ -16,7 +16,7 @@ func main() {
 
 	fmt.Println("enter the rating for my driving:")
 
-	// input, err := reader.ReadString('\n') //here input var is like try and err is like catch.
+	// input, err := reader.ReadString('\n') //here input variable is like try and err is like catch.
 
 	input, _ := reader.ReadString('\n')
 
