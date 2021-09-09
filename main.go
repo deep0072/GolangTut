@@ -18,6 +18,7 @@ func main() {
 	input, _ := reader.ReadString('\n') // this line read the input value that is given by user
 
 	numString, err := strconv.ParseFloat(strings.TrimSpace(input), 64) //string.TrimSpace will terminate the trailing spaces form input string
+	                                                                   //ParseFloat method convert strinh to float by taking 2 argument first is string and 2nd arg is int type
 
 	if err != nil {
 		fmt.Println(err)
