@@ -1,3 +1,5 @@
+// use "go build" to create exe file of program
+
 package main
 
 import (
