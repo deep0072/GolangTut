@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 
@@ -40,6 +43,8 @@ func main() {
 	//now to add more data into slice we can use append method
 
 	highscore = append(highscore, 90, 45, 5, 45, 45)
+
+	sort.Ints(highscore) //sort the slice in Ascending order
 
 	fmt.Println(highscore)
 }
