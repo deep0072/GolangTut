@@ -1,6 +1,7 @@
 // to run program use go run filename with go extension
 package main
 
+
 import "fmt"
 
 func main() {
