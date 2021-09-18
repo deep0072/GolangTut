@@ -44,7 +44,11 @@ func main() {
 
 	highscore = append(highscore, 90, 45, 5, 45, 45)
 
-	sort.Ints(highscore) //sort the slice in Ascending order
+	fmt.Println(sort.IntsAreSorted(highscore)) //check slice is sorted   output ==> false
+
+	sort.Ints(highscore) //sort the slice in increasing
 
 	fmt.Println(highscore)
+
+	fmt.Println(sort.IntsAreSorted(highscore)) // output ==> true
 }
