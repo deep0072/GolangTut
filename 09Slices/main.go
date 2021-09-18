@@ -26,4 +26,20 @@ func main() {
 
 	fmt.Println(fruitList)
 
+	// another way to declare the slices using make([]typeOfSlice, intial number of  slice can have)
+
+	highscore := make([]int, 5)
+
+	highscore[0] = 1
+	highscore[1] = 5
+	highscore[2] = 5
+	highscore[3] = 5
+
+	fmt.Println("these are the slices:", highscore)
+
+	//now to add more data into slice we can use append method
+
+	highscore = append(highscore, 90, 45, 5, 45, 45)
+
+	fmt.Println(highscore)
 }
