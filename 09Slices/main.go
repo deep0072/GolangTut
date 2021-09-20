@@ -51,4 +51,12 @@ func main() {
 	fmt.Println(highscore)
 
 	fmt.Println(sort.IntsAreSorted(highscore)) // output ==> true
+
+	var course = []string{"python", "js", "java", "golang"} // remove element based on index
+	fmt.Println(course)
+	var index = 2
+
+	course = append(course[:index], course[index+1:]...)
+
+	fmt.Println(course)
 }
