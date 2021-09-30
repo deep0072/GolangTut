@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 const Val = 6000 //here it is public variable means it can be used any where.
-// variable should be start with capital letter to declare public.
+// variable should be start with   capital letter to declare public.
 
 func main() {
 
