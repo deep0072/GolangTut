@@ -10,7 +10,7 @@ import (
 func main() {
 	fmt.Println("ho welcome to files handling")
 
-	content := " hi check the text file" //this is content that will be in file
+	content := " hi check the text file" //this is content that will be pushed in file
 
 	file, err := os.Create("./myfile.txt") // create text file
 
@@ -20,7 +20,8 @@ func main() {
 
 	}
 
-	length, err := io.WriteString(file, content) //here "io" package will write the content into file
+	length, err := io.WriteString(file, content) //here "io" package will use WriteString package to
+	// write the content into file
 
 	if err != nil {
 		panic(err)
@@ -46,6 +47,6 @@ func readFile(fileName string) {
 
 	fmt.Println("file", string(data)) //output ===>>> file  hi check the text file
 
-	//if i convert data variable in string format then actual data will be shown otherwise it will shown in bytes
+	//if i convert data variable in string format then actual data will be shown in strinf otherwise it will be  shown in bytes
 
 }
