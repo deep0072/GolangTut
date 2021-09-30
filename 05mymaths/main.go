@@ -16,7 +16,7 @@ func main() {
 
 	fmt.Println("sum of two number is", myNymberone+int(myNumbertwo))
 
-	// generate random number using crypot rand and math/rand
+	// generate random number  using crypot rand and math/rand
 
 	//using math/rand
 
