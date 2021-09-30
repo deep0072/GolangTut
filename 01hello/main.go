@@ -1,7 +1,6 @@
 // to run program use go run filename with go extension
 package main
 
-
 import "fmt"
 
 func main() {
@@ -13,4 +12,4 @@ func main() {
 
 }
 
-// go env GOPATH :\--> gives  the the path of golang where it is installed
+// go env GOPATH :\--> gives  the the path of  golang where it is installed
