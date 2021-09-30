@@ -14,8 +14,8 @@ func main() {
 	reader := bufio.NewReader(os.Stdin) //buffio store the input value in reader
 
 	fmt.Println("enter rating")
-
-	input, _ := reader.ReadString('\n') // this line read the input value that is given by user
+ 
+	input, _ := reader.ReadString('\n') // this line  read the input value that is given by user
 
 	numString, err := strconv.ParseFloat(strings.TrimSpace(input), 64) //string.TrimSpace will terminate the trailing spaces form input string
 
