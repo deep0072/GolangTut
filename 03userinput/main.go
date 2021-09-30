@@ -10,7 +10,7 @@ func main() {
 	welcome := "Welcome to the userInput"
 	fmt.Println(welcome)
 
-	reader := bufio.NewReader(os.Stdin) //bufio is a package used for buffered IO. Buffering IO is a technique used to temporarily
+	reader := bufio.NewReader(os.Stdin) //bufio is a  package used for buffered IO. Buffering IO is a technique used to temporarily
 	//accumulate the results for an IO operation before transmitting it forward
 	//it is used to store things in variable
 
