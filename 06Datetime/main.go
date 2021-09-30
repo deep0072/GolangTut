@@ -9,7 +9,7 @@ func main() {
 	PresentTime := time.Now()
 	fmt.Println(PresentTime)
 
-	// to get the time in mm-dd-yy
+	// to get the time in  mm-dd-yy
 
 	// we have to pass "01-02-2006" as an string argument
 
