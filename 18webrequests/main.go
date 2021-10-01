@@ -21,6 +21,7 @@ func main() {
 	fmt.Printf("Response  is of type: %T\n", response)
 
 	defer response.Body.Close() // caller's responsibility to close the connection
+
 	// as i used here defer so it will be execute in the end
 
 	data, err := ioutil.ReadAll(response.Body) //iutil.ReadAll will read the response in proper manner
