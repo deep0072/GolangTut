@@ -34,7 +34,7 @@ func main() {
 		fmt.Println(val)
 	}
 
-	// creat proper url using url.URL with scheme, Host, Path, RawPath
+	// construct proper url using url.URL with scheme, Host, Path, RawPath
 
 	partsOfUrl := &url.URL{
 		Scheme:  "https",    //Scheme is like https connection
