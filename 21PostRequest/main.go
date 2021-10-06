@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
 func main() {
 	fmt.Println("hello welcome to post request")
 	PerformPostUrl()
+	PerformPostFormRequest()
 }
 
 func PerformPostUrl() {
@@ -34,5 +36,28 @@ func PerformPostUrl() {
 	}
 
 	fmt.Println(string(content))
+
+}
+
+//Post form data as json fpr example in use of image upload
+func PerformPostFormRequest() {
+
+	const myUrl = "http://localhost:8000/postform"
+
+	data := url.Values{} //use url.Values{} to add data in variable
+
+	data.Add("firstname", "Deepak")
+	data.Add("lastname", "Kumar")
+	data.Add("Age", "23")
+
+	response, err := http.PostForm(myUrl, data) //post form data
+	if err != nil {
+		panic(err)
+	}
+
+	defer response.Body.Close()                   //close connection
+	content, err := ioutil.ReadAll(response.Body) //read response
+
+	fmt.Println(string(content)) //get content
 
 }
