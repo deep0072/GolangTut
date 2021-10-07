@@ -6,10 +6,10 @@ import (
 )
 
 type courses struct { //intialising the struct
-	Name     string
+	Name     string `json:"courseName"` //here we are creatin assumed name(alias) of keys that will be showed in output
 	Price    int
 	Platform string
-	Password string
+	Password string `json:"-"` // here "-" will hide the password field
 	Tags     []string
 }
 
