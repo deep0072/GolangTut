@@ -64,6 +64,7 @@ func DecodeJson() {
 		"Price": 560,
 
 		"Platform": "Deepcourse.com",
+		"Password" : "1234556",
 
 		"Tags": ["web-dev",	"ruby"]
 	
@@ -83,15 +84,24 @@ func DecodeJson() {
 	if checkValid {
 		println("json is valid")
 
-		json.Unmarshal(JsonDataFromweb, &DeepCourse)
+		json.Unmarshal(JsonDataFromweb, &DeepCourse) //now decode tha json using Unmarshal
 		//here json data will be decode and store in to &Deepcourse
 
-		fmt.Println(DeepCourse) //print the encoded json data
+		fmt.Println(DeepCourse, "course") //print the encoded json data
 
 	} else {
-		println("json was not valid")
+		fmt.Println("json was not valid")
 	}
 
-	//now decode tha json using Unmarshal
+	// some cases where i just want to add data to key and value in map(dictionary)
+
+	var myOnlinedata map[string]interface{} //here value could be int,string or array that we are getting from web so we used interface here\
+
+	json.Unmarshal(JsonDataFromweb, &myOnlinedata)
+	fmt.Printf("%#v\n", myOnlinedata)
+
+	for key, value := range myOnlinedata {
+		fmt.Printf("key is %v and value is %v and type is: %T\n", key, value, value)
+	}
 
 }
