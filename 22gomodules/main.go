@@ -8,6 +8,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// go list -m -versions "package name"
+
 //go list -m all ==> list all package that perticular related to program file
 func main() {
 	fmt.Println("welcome to the modules")
