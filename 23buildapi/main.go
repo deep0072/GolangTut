@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 //model for course - file
@@ -41,7 +43,31 @@ func getAllcourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get All Courses")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(courses) //this line encode the response which will be passed in Encode() method
+	//when we inject some fake data values in data base is known as seeding process
 
 }
 
-//when we inject some fake data values in data base is known as seeding process
+func getOnecourse(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Get One Course")
+	w.Header().Set("Content-Type", "application/json")
+
+	//grab id from request
+	params := mux.Vars(r)
+
+	//loop through the courses. find matching id and return the response
+
+	for _, course := range courses {
+
+		if course.CourseId == params["id"] {
+			json.NewEncoder(w).Encode(course)
+			//NewEncoder() takes reponse write and Encode() encode the message that we want to send as response
+
+			return
+
+		}
+
+	}
+	json.NewEncoder(w).Encode("no course is found")
+	return
+
+}
