@@ -3,8 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"net/http"
-
+	"strconv"
+	"time"
+q
 	"github.com/gorilla/mux"
 )
 
@@ -47,7 +50,7 @@ func getAllcourses(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getOnecourse(w http.ResponseWriter, r *http.Request) {
+func getOnecourse(w http.ResponseWriter, r *http.Request) { // function to get course using id from user input id
 	fmt.Println("Get One Course")
 	w.Header().Set("Content-Type", "application/json")
 
@@ -58,7 +61,7 @@ func getOnecourse(w http.ResponseWriter, r *http.Request) {
 
 	for _, course := range courses {
 
-		if course.CourseId == params["id"] {
+		if course.CourseId == params["id"] { //check if user requested id is in db
 			json.NewEncoder(w).Encode(course)
 			//NewEncoder() takes reponse write and Encode() encode the message that we want to send as response
 
@@ -68,6 +71,41 @@ func getOnecourse(w http.ResponseWriter, r *http.Request) {
 
 	}
 	json.NewEncoder(w).Encode("no course is found")
+
+	return
+
+}
+
+func CreateOneCOurse(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Create  One Course")
+	w.Header().Set("Content-Type", "application/json")
+
+	//what is user send empty request
+	if r.Body == nil {
+		json.NewEncoder(w).Encode("please send some data")
+
+	}
+
+	// what about data is sent by user  with cempty curly braces {}
+
+	var course Course // creating struct type variable 
+	_ = json.NewDecoder(r.Body).Decode(&course) // here take the request and decode the course
+
+	if course.IsEmpty() {
+		json.NewEncoder(w).Encode("No data inside json")
+		return
+
+	}
+
+	// generate unique id and append course in courses
+
+	rand.Seed(time.Now().UnixNano())
+
+	course.CourseId = strconv.Itoa(rand.Intn(100)) //string is converted into int using Itoa ==> equivalent to integer format
+
+	courses = append(courses, course) // add created course id into courses
+
+	json.NewEncoder(w).Encode(course) //send response
 	return
 
 }
