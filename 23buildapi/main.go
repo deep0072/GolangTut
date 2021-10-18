@@ -140,10 +140,29 @@ func updateOneCourse(w http.ResponseWriter, r *http.Request) {
 
 			json.NewEncoder(w).Encode(course) //here sending encoded message that added data in json form
 			return
-			
 
 		}
 
 	}
 
+}
+
+func DeleteOneCourse(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("deleted one course")
+	params := mux.Vars(r)
+
+	// loop ,id ,remove
+
+	for index, course := range courses {
+		if course.CourseId == params["id"] {
+			courses = append(courses[:index], courses[index+1:]...)
+
+			break
+
+		}
+
+	}
+
+	json.NewEncoder(w).Encode("course is deleted")
 }
