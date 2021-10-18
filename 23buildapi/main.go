@@ -1,3 +1,6 @@
+/* important info when you get request as a json then use decode to
+   do manipulation in data . then after it "encode" method is used to send the json response  */
+
 package main
 
 import (
@@ -7,7 +10,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-q
+
 	"github.com/gorilla/mux"
 )
 
@@ -16,7 +19,8 @@ type Course struct {
 	CourseId    string  `json:"courseid"`
 	CourseName  string  `json:"coursename"`
 	CoursePrice int     `json:"courseprice"`
-	Author      *Author `json:"author"` // here we are using author that is struct type will be add into in Course
+	Author      *Author `json:"author"` /* here we are using author that is   struct type will be add into in Course */
+
 }
 
 type Author struct {
@@ -38,6 +42,7 @@ func main() {
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
+
 	w.Write([]byte("welcome to Api by Deepcourse "))
 
 }
@@ -46,6 +51,7 @@ func getAllcourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get All Courses")
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(courses) //this line encode the response which will be passed in Encode() method
+
 	//when we inject some fake data values in data base is known as seeding process
 
 }
@@ -63,7 +69,7 @@ func getOnecourse(w http.ResponseWriter, r *http.Request) { // function to get c
 
 		if course.CourseId == params["id"] { //check if user requested id is in db
 			json.NewEncoder(w).Encode(course)
-			//NewEncoder() takes reponse write and Encode() encode the message that we want to send as response
+			//NewEncoder() takes reponse write and "Encode()" method  encode the message that we want to send as response
 
 			return
 
@@ -80,7 +86,7 @@ func CreateOneCOurse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Create  One Course")
 	w.Header().Set("Content-Type", "application/json")
 
-	//what is user send empty request
+	//what if user send empty request
 	if r.Body == nil {
 		json.NewEncoder(w).Encode("please send some data")
 
@@ -88,7 +94,7 @@ func CreateOneCOurse(w http.ResponseWriter, r *http.Request) {
 
 	// what about data is sent by user  with cempty curly braces {}
 
-	var course Course // creating struct type variable 
+	var course Course                           // creating struct type variable
 	_ = json.NewDecoder(r.Body).Decode(&course) // here take the request and decode the course
 
 	if course.IsEmpty() {
@@ -98,14 +104,46 @@ func CreateOneCOurse(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// generate unique id and append course in courses
-
 	rand.Seed(time.Now().UnixNano())
 
-	course.CourseId = strconv.Itoa(rand.Intn(100)) //string is converted into int using Itoa ==> equivalent to integer format
+	course.CourseId = strconv.Itoa(rand.Intn(100)) // string is converted into int using Itoa ==> equivalent to integer format
 
 	courses = append(courses, course) // add created course id into courses
 
-	json.NewEncoder(w).Encode(course) //send response
+	json.NewEncoder(w).Encode(course) // send response
 	return
+
+}
+
+func updateOneCourse(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("hello update the course")
+	w.Header().Set("Content-Type", "application/json")
+
+	params := mux.Vars(r)
+
+	//loop,id,remove,add my new  id
+
+	for index, course := range courses {
+		if course.CourseId == params["id"] { //check id if available
+			courses = append(courses[:index], courses[index+1:]...) // now remove the id using append fucntion
+
+			//here first parameter is the values before the index that we find, 2nd param is the those value which will come after the inex we already got
+
+			var course Course
+
+			_ = json.NewDecoder(r.Body).Decode(&course) // here it will take message and decode the json
+
+			course.CourseId = params["id"]
+
+			courses = append(courses, course) // add the data we want to add in course
+
+			json.NewEncoder(w).Encode(course) //here sending encoded message that added data in json form
+			return
+			
+
+		}
+
+	}
 
 }
