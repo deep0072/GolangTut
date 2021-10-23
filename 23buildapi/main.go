@@ -1,4 +1,4 @@
-/* important info when you get request as a json then use decode to
+/* important info when you get request as a json then use decode method to
    do manipulation in data . then after it "encode" method is used to send the json response  */
 
 package main
@@ -6,6 +6,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -18,7 +19,7 @@ import (
 type Course struct {
 	CourseId    string  `json:"courseid"`
 	CourseName  string  `json:"coursename"`
-	CoursePrice int     `json:"courseprice"`
+	CoursePrice int     `json:"-"`
 	Author      *Author `json:"author"` /* here we are using author that is   struct type will be add into in Course */
 
 }
@@ -39,6 +40,23 @@ func (c *Course) IsEmpty() bool { // here function taking parameter with return 
 func main() {
 
 	fmt.Println("welcome to building of api in golang")
+	r := mux.NewRouter()
+
+	courses = append(courses, Course{CourseId: "1", CourseName: "python", CoursePrice: 500, Author: &Author{FUllname: "Deepak Kumar", Website: "deeprofile.herokuapp.com"}})
+	courses = append(courses, Course{CourseId: "2", CourseName: "Golang", CoursePrice: 500, Author: &Author{FUllname: "Deepak Kumar", Website: "deeprofile.herokuapp.com"}})
+
+	//routing
+	r.HandleFunc("/", serveHome).Methods("GET") //here we are calling all function we mentioned below using HandleFunc method
+
+	r.HandleFunc("/courses", getAllcourses).Methods("GET")       //get all courses
+	r.HandleFunc("/course/{id}", getOnecourse).Methods("GET")    // here we calling getonecourse so we are passing id in {} same as in function it self.
+	r.HandleFunc("/course", CreateOneCourse).Methods("POST")     //caling post method
+	r.HandleFunc("/course/{id}", updateOneCourse).Methods("PUT") //update method
+	r.HandleFunc("/course/{id}", DeleteOneCourse).Methods("DELETE")
+
+	// listen to a port
+	log.Fatal(http.ListenAndServe(":4000", r))
+
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +74,7 @@ func getAllcourses(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func getOnecourse(w http.ResponseWriter, r *http.Request) { // function to get course using id from user input id
+func getOnecourse(w http.ResponseWriter, r *http.Request) { // function to get course using id from user input
 	fmt.Println("Get One Course")
 	w.Header().Set("Content-Type", "application/json")
 
@@ -82,7 +100,7 @@ func getOnecourse(w http.ResponseWriter, r *http.Request) { // function to get c
 
 }
 
-func CreateOneCOurse(w http.ResponseWriter, r *http.Request) {
+func CreateOneCourse(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Create  One Course")
 	w.Header().Set("Content-Type", "application/json")
 
