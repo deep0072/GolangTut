@@ -6,6 +6,7 @@ import (
 	"log"
 
 	model "github.com/deep0072/mongoapi/models"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -55,4 +56,30 @@ func insertData(movie model.Netflix) {
 	}
 
 	fmt.Println("inserted a single document: ", insertResult.InsertedID)
+}
+
+//update record in mongodb
+func updateOneMovie(movieID string) {
+	id, _:= primitive.ObjectIDFromHex(movieID) // it will convert the string to mongo object id
+
+	filter := bson.M("_id": id) // here get the id we want to update. "_id" it is the typical id of mongodb. it is kind of getter
+	//bson. M for the filter, it usually results in shorter and clearer filter declaration, the order of fields doesn't matter,
+
+	update := bson.M("$set": bson.M("watched": true) // here we are setting the watched field to true that will be updated
+
+	result, err := collection.UpdateOne(context.Background(), filter, update) // it will update the watched field to true
+
+	if err ! = {
+		log.Fatal(err)
+	}
+
+	fmt.Println("modified ", result.ModifiedCount, "record")
+
+	
+
+
+
+
+
+
 }
