@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	model "github.com/deep0072/mongoapi/models"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -22,8 +23,8 @@ var collection *mongo.Collection
 func init() {
 
 	// Connect to MongoDB
-	clientOption := options.Client().ApplyURI(connnectionString) // here client refer to DB and this is used to tell that we are 
-	                                                             //using this connection string
+	clientOption := options.Client().ApplyURI(connnectionString) // here client refer to DB and this is used to tell that we are
+	//using this connection string
 
 	//connect to db
 
@@ -42,4 +43,16 @@ func init() {
 
 	fmt.Println(" instance create in mongo db")
 
+}
+
+//here model.Netflix is the type of the struct that is import from models.go
+// we did not use here models. because in models.go file use package name "model"
+func insertData(movie model.Netflix) {
+	insertResult, err := collection.InsertOne(context.Background(), movie)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("inserted a single document: ", insertResult.InsertedID)
 }
