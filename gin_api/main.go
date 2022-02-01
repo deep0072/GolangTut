@@ -89,12 +89,44 @@ func checkoutBook(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, book)
 }
 
+
+func returnBook (c *gin.Context){
+	id ,ok := c.GetQuery("id")
+	if !ok{
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "id is required"})
+		return
+
+	}
+
+	book, err:= getaBookByid(id)
+
+	if err != nil{
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "no book found"})
+		return
+	}
+
+
+	if book.Quantity <=0 {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "no id is there"})
+	}
+
+	book.Quantity +=1
+	c.IndentedJSON(http.StatusOK, book)
+}
+
+
+
+
+
+
+
 func main() {
 	router := gin.Default()                 // allows to handle different routes
 	router.GET("/books", getBooks)          // triggget the getbooks function when the /books is called
 	router.POST("/create", createBooks)     // trigger the createbooks function when the /create is called
 	router.GET("/book/:id", bookByid)       // trigger the bookByid function when the /book/:id is called
 	router.PATCH("/checkout", checkoutBook) // trigger the checkoutBook function when the /checkout is called this is kind  of updating
+	router.PATCH("/return", returnBook)
 	router.Run("localhost:8080")            // it run the local host on port 8080
 
 }
