@@ -18,9 +18,11 @@ func main() {
 
 	// fmt.Println(ptr)
 
-	myNumber := 23
+	var myNumber = 23
 
 	var ptr = &myNumber //here "&" sign means refrence.  "ptr" variable is refrencing to the memory address of "myNumber" variable
+
+	fmt.Println("&myNumber:", &myNumber, ptr)
 
 	fmt.Println("value of actual pointer is  ", ptr) //it will print the value of ptr that is holding the address of memory
 

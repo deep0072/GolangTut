@@ -1,10 +1,11 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	// "errors"
 )
 
 type book struct {
@@ -40,10 +41,35 @@ func createBooks(c *gin.Context) {
 
 }
 
+// function to get book by its id
+func getaBookByid(id string) (*book, error) {
+
+	for i, b := range books {
+		if b.ID == id {
+			return &books[i], nil
+		}
+	}
+
+	return nil, errors.New("Book not found")
+
+}
+
+func bookByid(c *gin.Context) {
+	fmt.Println(books)
+	id := c.Param("id")           //get the id from the url
+	book, err := getaBookByid(id) //get the book by its id
+	if err != nil {
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, book) //return the book in json format
+}
+
 func main() {
 	router := gin.Default()             // allows to handle different routes
 	router.GET("/books", getBooks)      // triggget the getbooks function when the /books is called
 	router.POST("/create", createBooks) // trigger the createbooks function when the /create is called
+	router.GET("/book/:id", bookByid)   // trigger the bookByid function when the /book/:id is called
 	router.Run("localhost:8080")        // it run the local host on port 8080
 
 }
